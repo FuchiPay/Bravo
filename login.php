@@ -13,22 +13,23 @@ if (!$conn) {
 }
 
 $nombre = $_POST["txtusuario"];
-$pass = $_POST["txtpassword"]; 
+$pass = $_POST["txtpassword"];
+$txtrole = $_POST["txtrole"];  
+
 $query = mysqli_query($conn, "SELECT * FROM login WHERE usuario = '" . $nombre . "' and password = '" . $pass . "'");
 
-$nr = mysqli_num_rows($query);	
+$nr = mysqli_num_rows($query);
 
 if ($nr == 1) {
-    echo "Bienvenido Vendedor: " . $nombre;
+    // Verifica el rol seleccionado
+    if ($txtrole == "vendedor") {
+        echo "Bienvenido Vendedor: " . $nombre;
+    } else if ($txtrole == "comprador") {
+        echo "Bienvenido: " . $nombre;
+    }
 } else if ($nr == 0) {
-    // Si no se encontró ningún usuario, redirige a la página de login (comentado)
-    // header("Location: login.html");
-    // Muestra un mensaje de error (para depuración)
+    // Si no se encontró ningún usuario, muestra un mensaje de error
     echo "No ingreso";
-    // Muestra un mensaje de error con redirección (comentado)
-    // echo "<script> alert('Error');window.location= 'login.html' </script>";
 }
-	
-
 
 ?>
